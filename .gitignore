@@ -6,4 +6,6 @@ css/example-2.css
 examples/example-2.html
 examples/index.html
 
-_partials/example-2.scss
+sass/_partials/example-2.scss
+
+js/scripts.concat.js
