@@ -1,4 +1,4 @@
-function Sipario(selectorOrElement) {
+function Sipario(selectorOrElement, options) {
 
   // values
   var zIndexBase = 0;
@@ -9,12 +9,12 @@ function Sipario(selectorOrElement) {
   var cbSiparioReady = null;
 
   // elements
-  var parent;
+  var siparioContainer;
   console.log(typeof selectorOrElement);
   if (typeof selectorOrElement === "string") {
-    parent = document.querySelector(selectorOrElement);
+    siparioContainer = document.querySelector(selectorOrElement);
   } else if (selectorOrElement.querySelector) {
-    parent = selectorOrElement;
+    siparioContainer = selectorOrElement;
   } else {
     throw ("Sipario was not able to find the container element. Please, check the element you‘ve passed to the new Sipario() function.");
   }
@@ -26,6 +26,10 @@ function Sipario(selectorOrElement) {
   var siparioId = "sipario-" + new Date().getTime();
   var siparioChildrenClass = "sipario__child";
   var siparioChildrenFixedClass = "sipario__child--fixed";
+
+  // options
+  var options = options || {};
+  var forceSiparioHeight = options.forceSiparioHeight || false;
 
 /*
    ###    ##    ##  ######  ##     ##  #######  ########   ######
@@ -90,7 +94,7 @@ function Sipario(selectorOrElement) {
     }
   }
   
-  var siparioInnerAnchors = parent.querySelectorAll("*[id]");
+  var siparioInnerAnchors = siparioContainer.querySelectorAll("*[id]");
   //
   for (var i = 0; i < siparioInnerAnchors.length; i++) {
     var targetElement = siparioInnerAnchors[i];
@@ -219,8 +223,8 @@ function Sipario(selectorOrElement) {
   * and add a sipario__child (default) class to every child
   */
   function setupChildren() {
-    parent.classList.add(siparioClass);
-    parent.id = siparioId;
+    siparioContainer.classList.add(siparioClass);
+    siparioContainer.id = siparioId;
     children = document.querySelectorAll("#" + siparioId + " > *");
     for (var i = 0; i < children.length; i++) {
       children[i].classList.add(siparioChildrenClass, siparioChildrenClass + (i+1));
@@ -249,14 +253,15 @@ function Sipario(selectorOrElement) {
       cBox = c.getBoundingClientRect();
       var h = cBox.bottom - cBox.top;
       childrenHeights[i] = h;
-      // questo check è da rendere opzionale
-      // per poter gestire contenuto che segue il sipario in modo che si incastri subito dopo l'ultima slide
-      if (i === children.length - 1 && h < windowHeight) {
-        h = windowHeight;
+      //
+      if (forceSiparioHeight === true) {
+        if (i === children.length - 1 && h < windowHeight) {
+          h = windowHeight;
+        }
       }
       bodyHeight += h;
     }
-    parent.style.minHeight = bodyHeight + "px";
+    siparioContainer.style.minHeight = bodyHeight + "px";
   }
   
   /**
