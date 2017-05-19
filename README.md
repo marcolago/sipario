@@ -1,5 +1,5 @@
-# Sipario
-### A Curtain Like Scroll Library Dependencies Free
+# Sipario Scroller
+### A Curtain Like Scroll Library
 
 ## Usage
 Include the `sipario.js` and the `sipario.css` files in your project.
@@ -24,4 +24,6 @@ Scroll!
 
 ## Notes
 
-You can add vertical margins, if your realli want, but please mind that the elements could not be positioned where you expect and some other “strange things” could happens.
+Sipario Scroller has no dependencies and manages the animated scroll with it’s own logic. Pay attention when mixing Sipario with other scrolling and animation libraries.
+
+You can add vertical margins to Sipario children, if your really want, but please mind that the elements could not be positioned where you expect and some other “unexpected things” could happens.
