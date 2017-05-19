@@ -2,6 +2,7 @@
 node_modules/
 _wip/
 
+css/example-2.css
 examples/example-2.html
 examples/index.html
 
