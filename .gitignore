@@ -2,7 +2,7 @@
 node_modules/
 _wip/
 
-examples/example-2.scss
-examples/index.scss
+examples/example-2.html
+examples/index.html
 
 _partials/example-2.scss
