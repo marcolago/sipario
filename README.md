@@ -9,7 +9,9 @@ Customize the content of every Sipario child as you like in your CSS, but pay at
 Call the Sipario constructor passing the container element CSS selector or element.
 ```javascript
 var sipario = new Sipario(".my-parent-element");
+```
 or
+```javascript
 var element = document.querySelector(".my-parent-element");
 var sipario = new Sipario(element);
 ```
