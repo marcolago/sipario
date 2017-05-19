@@ -98,7 +98,7 @@ function Sipario(selectorOrElement, options) {
   //
   for (var i = 0; i < siparioInnerAnchors.length; i++) {
     var targetElement = siparioInnerAnchors[i];
-    var linkElements = document.querySelectorAll("*[href='#" + targetElement.id + "'");
+    var linkElements = document.querySelectorAll("*[href='#" + targetElement.id + "']");
     for (var j = 0; j < linkElements.length; j++) {
       var element = linkElements[j];
       if (element.getAttribute("href") && element.getAttribute("href").substr(0,1) === "#" && element.getAttribute("href").length > 1) {
