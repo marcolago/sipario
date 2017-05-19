@@ -138,20 +138,17 @@ function Sipario(selectorOrElement, options) {
 ######## ####  ######     ##    ######## ##    ## ######## ##     ##
 */
 
-  // non optimized listener
-  // have to debounce the execution
   window.addEventListener("scroll", onScroll);
   window.addEventListener("resize", onResize);
   document.addEventListener("DOMContentLoaded", onDOMContentLoaded);
   window.addEventListener("load", onWindowLoadComplete);
 
   function onScroll(e) {
-    updateLoop();
+    doScroll();
   }
-  
+
   function onResize(e) {
-    setupHeights();
-    updateLoop();
+    doResize();
   }
   
   function onDOMContentLoaded(e) {
@@ -278,8 +275,6 @@ function Sipario(selectorOrElement, options) {
   */
   setupChildren();
   setup();
-  
-}
 
 /*
  ######   ######  ########   #######  ##       ##          ##        #######   ######   ####  ######
@@ -291,58 +286,87 @@ function Sipario(selectorOrElement, options) {
  ######   ######  ##     ##  #######  ######## ########    ########  #######   ######   ####  ######
 */
 
-window.requestAnimFrame = (function() {
-  return  window.requestAnimationFrame       || 
-          window.webkitRequestAnimationFrame || 
-          window.mozRequestAnimationFrame    || 
-          window.oRequestAnimationFrame      || 
-          window.msRequestAnimationFrame     || 
-          function( callback ) {
-            window.setTimeout(callback, 1000 / 60);
-          };
-})();
+  var ticking = false;
 
-function scrollAnimTo(where, offset, time, callback) {
-  var startTime;
-  var o = offset || 0;
-  var e = typeof where === 'string' ? document.querySelector(where) : where;
-  var s = window.pageYOffset;
-  var d = typeof where === 'number' ? where : offset + e.getBoundingClientRect().top;
-  var t = time || 1000;
-  var start;
-
-  // simulates the hash change
-  if (typeof where === 'string' && where.substr(0,1) === "#") {
-    document.location.hash = where;
+  function doScroll() {
+    ticker(false);
   }
-  // starts the animation loog
-  requestAnimFrame(scrollAnimLoop);
 
-  function scrollAnimLoop(timestamp) {
-    if (!start) start = timestamp;
-    var progress = timestamp - start;
+  function doResize() {
+    ticker(true);
+  }
 
-    var nextStep = scrollEasing(progress, s, d, t);
-    window.scrollTo(0, nextStep)
-    if (progress < time) {
-      requestAnimFrame(scrollAnimLoop);
-    } else {
-      scrollAnimEnd();
+  function ticker(resize) {
+    isResizing = resize;
+    //
+    if(ticking === false) {
+      requestAnimFrame(updateRaf);
+    }
+    ticking = true;
+  }
+
+  function updateRaf() {
+    ticking = false;
+    if (isResizing === true) {
+      setupHeights();
+    }
+    updateLoop();
+  }
+
+  window.requestAnimFrame = (function() {
+    return  window.requestAnimationFrame       || 
+            window.webkitRequestAnimationFrame || 
+            window.mozRequestAnimationFrame    || 
+            window.oRequestAnimationFrame      || 
+            window.msRequestAnimationFrame     || 
+            function( callback ) {
+              window.setTimeout(callback, 1000 / 60);
+            };
+  })();
+
+  function scrollAnimTo(where, offset, time, callback) {
+    var startTime;
+    var o = offset || 0;
+    var e = typeof where === 'string' ? document.querySelector(where) : where;
+    var s = window.pageYOffset;
+    var d = typeof where === 'number' ? where : offset + e.getBoundingClientRect().top;
+    var t = time || 1000;
+    var start;
+
+    // simulates the hash change
+    if (typeof where === 'string' && where.substr(0,1) === "#") {
+      document.location.hash = where;
+    }
+    // starts the animation loog
+    requestAnimFrame(scrollAnimLoop);
+
+    function scrollAnimLoop(timestamp) {
+      if (!start) start = timestamp;
+      var progress = timestamp - start;
+
+      var nextStep = scrollEasing(progress, s, d, t);
+      window.scrollTo(0, nextStep)
+      if (progress < time) {
+        requestAnimFrame(scrollAnimLoop);
+      } else {
+        scrollAnimEnd();
+      }
+    }
+
+    function scrollAnimEnd() {
+      window.scrollTo(0, s + d);
+      if (typeof callback === 'function') {
+        callback();
+      }
+    }
+
+    function scrollEasing(t,b,c,d) {
+      // Robert Penner's easeInOutQuad - http://robertpenner.com/easing/
+      t /= d / 2
+      if(t < 1) return c / 2 * t * t + b
+      t--
+      return -c / 2 * (t * (t - 2) - 1) + b
     }
   }
-
-  function scrollAnimEnd() {
-    window.scrollTo(0, s + d);
-    if (typeof callback === 'function') {
-      callback();
-    }
-  }
-
-  function scrollEasing(t,b,c,d) {
-    // Robert Penner's easeInOutQuad - http://robertpenner.com/easing/
-    t /= d / 2
-    if(t < 1) return c / 2 * t * t + b
-    t--
-    return -c / 2 * (t * (t - 2) - 1) + b
-  }
+  
 }
