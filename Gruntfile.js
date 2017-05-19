@@ -49,18 +49,6 @@ module.exports = function(grunt) {
       }
     },
 
-    includes: {
-      files: {
-        src: ['template/*.html'], // Source files
-        dest: '', // Destination directory
-        flatten: true,
-        cwd: '',
-        options: {
-          silent: true
-        }
-      }
-    },
-
     concat: {
       generated: {
         files: [
@@ -88,31 +76,6 @@ module.exports = function(grunt) {
         ]
       }
     },
-
-    svgstore: {
-      options: {
-        includedemo: true
-      },
-      default : {
-        files: {
-          'img/sprites.svg': ['_wip/svg-sprites/*.svg'],
-        },
-      }
-    },
-
-    copy: {
-      main: {
-        files: [
-          // includes files within path
-          {expand: true, src: ['*.html'], dest: '/volumes/clienti/magnetimarelli/laptimeclub/', filter: 'isFile'},
-
-          // includes files within path and its sub-directories
-          {expand: true, src: ['css/**'], dest: '/volumes/clienti/magnetimarelli/laptimeclub/'},
-          {expand: true, src: ['img/**'], dest: '/volumes/clienti/magnetimarelli/laptimeclub/'},
-          {expand: true, src: ['js/**'],  dest: '/volumes/clienti/magnetimarelli/laptimeclub/'}
-        ],
-      },
-    }
 
   });
 
