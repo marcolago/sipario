@@ -15,3 +15,7 @@ var sipario = new Sipario(element);
 ```
 
 Scroll!
+
+## Examples
+
+[Example 1](https://marcolago.github.io/sipario/examples/example-1.html): Pikmin Illustrations, fixed sidebar and anchors management.
