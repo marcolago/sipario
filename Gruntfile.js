@@ -65,12 +65,9 @@ module.exports = function(grunt) {
       generated: {
         files: [
           {
-            dest: 'js/scripts.concat.js',
+            dest: 'js/sipario.concat.js',
             src: [
-              'js/polyfills.js',
-              'js/cookies.js',
-              'js/scripts.js'
-              //'js/svg4everybody.min.js'
+              'js/sipario.js'
             ]
           }
         ]
@@ -85,8 +82,8 @@ module.exports = function(grunt) {
         
         files: [
           {
-            dest: 'js/scripts.min.js',
-            src: ['js/scripts.concat.js']
+            dest: 'js/sipario.min.js',
+            src: ['js/sipario.js']
           }
         ]
       }
@@ -121,5 +118,5 @@ module.exports = function(grunt) {
 
   // Default task
   grunt.registerTask('default', ['sass', 'postcss']);
-  grunt.registerTask('mini', ['concat', 'uglify']);
+  grunt.registerTask('mini', ['uglify']);
 };
