@@ -4,7 +4,7 @@
 ## Usage
 Include the `sipario.js` and the `sipario.css` files in your project.
 
-Customize the content of every Sipario child as you like in your CSS, but pay attention to **not add top and bottom margins<sup>1</sup>**.
+Customize the content of every Sipario child as you like in your CSS, but pay attention to **not add top and bottom margins**.
 
 Call the Sipario constructor passing the container element CSS selector or element.
 ```javascript
@@ -24,4 +24,4 @@ Scroll!
 
 ## Notes
 
-<sup>1</sup> You can add vertical margins, if your realli want, but please mind that the elements could not be positioned where you expect and some other “strange things” could happens.
+You can add vertical margins, if your realli want, but please mind that the elements could not be positioned where you expect and some other “strange things” could happens.
