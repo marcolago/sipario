@@ -10,7 +10,6 @@ function Sipario(selectorOrElement, options) {
 
   // elements
   var siparioContainer;
-  console.log(typeof selectorOrElement);
   if (typeof selectorOrElement === "string") {
     siparioContainer = document.querySelector(selectorOrElement);
   } else if (selectorOrElement.querySelector) {
@@ -111,7 +110,6 @@ function Sipario(selectorOrElement, options) {
   for (var i = 0; i < siparioOuterAnchors.length; i++) {
     var element = siparioOuterAnchors[i];
     if (element.getAttribute("href") && element.getAttribute("href").substr(0,1) === "#" && element.getAttribute("href").length > 1) {
-      console.log(element);
       var currentElement = element;
       currentElement.addEventListener("click", function(e) {
         if (e.preventDefault) { e.preventDefault(); }
@@ -145,10 +143,13 @@ function Sipario(selectorOrElement, options) {
 
   function onScroll(e) {
     doScroll();
+    //updateLoop();
   }
 
   function onResize(e) {
     doResize();
+    //setupHeights();
+    //updateLoop();
   }
   
   function onDOMContentLoaded(e) {
@@ -287,6 +288,7 @@ function Sipario(selectorOrElement, options) {
 */
 
   var ticking = false;
+  var isResizing = false;
 
   function doScroll() {
     ticker(false);
