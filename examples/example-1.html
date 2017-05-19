@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pikmin Sipario Example</title>
+  <link rel="stylesheet" type="text/css" href="../css/sipario.css">
+  <link rel="stylesheet" type="text/css" href="../css/example-1.css">
+</head>
+<body>
+
+  <div class="parent-element">
+    <div class="child-element element-1" id="child-element-1">
+       <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/5d75e342269327.57c6f85b8948d.jpg">
+      <a id="inner-1"></a>
+      <a id="mid-1"></a>
+    </div>
+    <div class="child-element element-2" id="child-element-2">
+      <div class="sidebar">
+        <p>Pikmin illustrations by <a href="https://www.behance.net/gallery/42269327/Pikmin-Front-Back-T-Shirt-Illustrations" target="_blank">marcolago</a></p>
+      </div>
+      <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/3f4ba442269327.57c6f85b8c992.jpg">
+      <a id="inner-2"></a>
+      <a id="mid-2"></a>
+    </div>
+    <div class="child-element element-3" id="child-element-3">
+      <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/1e997342269327.57c6f85b8d073.jpg">
+    </div>
+    <div class="child-element element-4" id="child-element-4">
+      <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/ac2bcc42269327.57c6f85b8d5e2.jpg">
+    </div>
+  </div>
+
+  <div id="following-content"></div>
+
+<div class="anchors">
+  <ul>
+    <li><a href="#child-element-1">Blue Front</a></li>
+    <li><a href="#child-element-2">Blue Back</a></li>
+    <li><a href="#child-element-3">Red Front</a></li>
+    <li><a href="#child-element-4">Red Back</a></li>
+    <li><a href="#inner-1">After Blue Front</a></li>
+    <li><a href="#inner-2">After Blue Back</a></li>
+    <li><a href="#mid-1">Middle of Blue Front</a></li>
+    <li><a href="#mid-2">Middle of Blue Back</a></li>
+    <li><a href="#following-content">Following Content</a></li>
+    <li><a href="#inner-1">After Blue Front, Again</a></li>
+  </ul>
+</div>
+
+  <script src="../js/sipario.js"></script>
+  <script>
+    var sipario = new Sipario(".parent-element");
+  </script>
+</body>
+</html>

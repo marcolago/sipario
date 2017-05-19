@@ -1,0 +1,8 @@
+.sass-cache/
+node_modules/
+_wip/
+
+examples/example-2.scss
+examples/index.scss
+
+_partials/example-2.scss

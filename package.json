@@ -1,0 +1,16 @@
+{
+  "name": "sipario",
+  "version": "0.0.0",
+  "dependencies": {},
+  "devDependencies": {
+    "autoprefixer": "*",
+    "grunt": "*",
+    "grunt-contrib-concat": "*",
+    "grunt-contrib-copy": "*",
+    "grunt-contrib-sass": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-postcss": "*",
+    "load-grunt-tasks": "*"
+  }
+}
