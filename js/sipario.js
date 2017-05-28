@@ -3,6 +3,8 @@ function Sipario(selectorOrElement, options) {
   // values
   var zIndexBase = 0;
   var childrenHeights = [];
+  var currentHash = "";
+  var isScrolling = false;
 
   // callbacks
   var cbSiparioDOMReady = null;
@@ -44,7 +46,7 @@ function Sipario(selectorOrElement, options) {
   * manage the link to anchors both inside and outside the sipario element
   */
 
-  function getAnchor(target, outer) {
+  function getAnchor(target, outer, updateHash) {
     var tElement = target;
     
     var localY = getOffset(tElement).top;
@@ -82,7 +84,7 @@ function Sipario(selectorOrElement, options) {
     //window.scrollTo(0, yTo);
     var delta = -window.scrollY + yTo;
     var speed = Math.abs(delta) > 2000 ? 1500 : 1000;
-    scrollAnimTo(yTo, 0, speed);
+    scrollAnimTo(yTo, 0, speed, null, target.id, updateHash);
   }
   
   function getOffset(el) {
@@ -123,7 +125,14 @@ function Sipario(selectorOrElement, options) {
     linkElement.addEventListener("click", function(e) {
       if (e.preventDefault) { e.preventDefault(); }
       getAnchor(targetElement, true);
-    });  
+    });
+  }
+
+  function getAnchorInOrOut(hash) {
+    if (siparioContainer.querySelector(hash)) {
+      return true;
+    }
+    return false;
   }
 
 /*
@@ -140,6 +149,8 @@ function Sipario(selectorOrElement, options) {
   window.addEventListener("resize", onResize);
   document.addEventListener("DOMContentLoaded", onDOMContentLoaded);
   window.addEventListener("load", onWindowLoadComplete);
+  window.addEventListener("popstate", onHashChange);
+  window.addEventListener("hashchange", onHashChange); // this one is for IE9 retrocompatibility only
 
   function onScroll(e) {
     doScroll();
@@ -163,6 +174,16 @@ function Sipario(selectorOrElement, options) {
     setup();
     if(cbSiparioReady) {
       cbSiparioReady();
+    }
+  }
+
+  function onHashChange(e) {
+    e.preventDefault();
+    if (isScrolling === false) {
+      var hash = document.location.hash;
+      if (hash !== currentHash) {
+        getAnchor(document.querySelector(hash), getAnchorInOrOut(hash));
+      }
     }
   }
 
@@ -326,7 +347,7 @@ function Sipario(selectorOrElement, options) {
             };
   })();
 
-  function scrollAnimTo(where, offset, time, callback) {
+  function scrollAnimTo(where, offset, time, callback, hash, updateHash) {
     var startTime;
     var o = offset || 0;
     var e = typeof where === 'string' ? document.querySelector(where) : where;
@@ -335,11 +356,8 @@ function Sipario(selectorOrElement, options) {
     var t = time || 1000;
     var start;
 
-    // simulates the hash change
-    if (typeof where === 'string' && where.substr(0,1) === "#") {
-      document.location.hash = where;
-    }
     // starts the animation loog
+    isScrolling = true;
     requestAnimFrame(scrollAnimLoop);
 
     function scrollAnimLoop(timestamp) {
@@ -360,6 +378,17 @@ function Sipario(selectorOrElement, options) {
       if (typeof callback === 'function') {
         callback();
       }
+
+      // simulates the hash change
+      if (updateHash !== false) {
+        if (typeof where === 'string' && where.substr(0,1) === "#") {
+          document.location.hash = where;
+        } else {
+          document.location.hash = hash;
+        }
+        currentHash = document.location.hash;
+      }
+      isScrolling = false;
     }
 
     function scrollEasing(t,b,c,d) {
